@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Sample file just specifies 1 way link
+The other way of the link is handled by RoadSystem.Link function
+
+System with crashed node
+Expected result : 1,2,3,5,6
+-->
+<graph>
+  <node id="1" role="start">
+    <link ref="2" weight="4"/>
+    <link ref="4" weight="1"/>
+    <link ref="6" weight="30"/>
+  </node>
+  <node id="2">
+    <link ref="3" weight="6"/>    
+  </node>
+  <node id="3">
+    <link ref="4" weight="5"/>
+    <link ref="5" weight="3"/>
+  </node>
+  <node id="4" status="crash">
+    <link ref="5" weight="2"/>
+  </node>
+  <node id="5">
+    <link ref="6" weight="3"/>
+  </node>
+  <node id="6" role="finish">
+    <link ref="6" weight="3"/>
+  </node>
+</graph>

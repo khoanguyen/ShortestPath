@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<graph>
+  <node id="1" role="start">
+    <link ref="6" weight="5" />
+    <link ref="2" weight="5" />
+  </node>
+  <node id="2  ">
+    <link ref="1  "/>
+    <link ref="3" weight="5   " />
+  </node>
+  <node id="3">
+    <link ref="2" weight="5" />
+    <link ref="4" weight="15 " />
+  </node>
+  <node id="4">
+    <link ref="5" weight="10" />
+    <link ref="10" weight="3  " />
+    <link ref="12" weight="2" />
+    <link ref="3" weight="15  " />
+  </node>
+  <node id="5">
+    <link ref="6" weight="7" />
+    <link ref="9" weight="13" />
+    <link ref="4" weight="10" />
+  </node>
+  <node id="6">
+    <link ref="7" weight="2" />
+    <link ref="8" weight="3" />
+    <link ref="5" weight="7" />
+    <link ref="1" weight="5" />
+  </node>
+  <node id="7">
+    <link ref="6" weight="2" />
+  </node>
+  <node id="8">
+    <link ref="6" weight="3" />
+    <link ref="9" weight="4" />
+    <link ref="11" weight="4" />
+  </node>
+  <node id="9">
+    <link ref="8" weight="4" />
+    <link ref="10" weight="10" />
+    <link ref="5" weight="13" />
+  </node>
+  <node id="10" role="finish">
+    <link ref="4" weight="3" />
+    <link ref="9" weight="10" />
+    <link ref="11" weight="4" />
+  </node>
+  <node id="11" status="crash">
+    <link ref="8" weight="4" />
+    <link ref="10" weight="4" />
+  </node>
+  <node id="12">
+    <link ref="4" weight="2" />
+  </node>
+</graph>

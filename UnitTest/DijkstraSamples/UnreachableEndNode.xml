@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Sample file just specifies 1 way link
+The other way of the link is handled by RoadSystem.Link function
+
+Unreachable end node
+Expected result : Empty
+-->
+<graph>
+  <node id="1" role="start">
+    <link ref="2" weight="6"/>
+    <link ref="3" weight="9"/>    
+  </node>
+  <node id="2">
+    <link ref="3" weight="7"/>    
+  </node>
+  <node id="3">    
+  </node>
+  <node id="4" role="finish">    
+  </node>
+</graph>

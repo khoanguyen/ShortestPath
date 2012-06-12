@@ -40,9 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DijktraShortestPathFinder.cs" />
+    <Compile Include="DijkstraShortestPathFinder.cs" />
+    <Compile Include="Extension.cs" />
     <Compile Include="IShortestPathFinder.cs" />
     <Compile Include="LinkCollection.cs" />
+    <Compile Include="LoadRoadSystemException.cs" />
     <Compile Include="NodeRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoadNode.cs" />

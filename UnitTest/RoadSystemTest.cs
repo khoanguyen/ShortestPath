@@ -5,6 +5,8 @@ using System.Text;
 using NUnit.Framework;
 using RoadSystemLib;
 using System.Threading;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace UnitTest
 {
@@ -84,6 +86,16 @@ namespace UnitTest
         }
 
         [Test]
+        public void TestCount()
+        {
+            _roadSystem.CreateNewNode(1);
+            Assert.AreEqual(1, _roadSystem.Count);
+
+            _roadSystem.CreateNewNode(2);
+            Assert.AreEqual(2, _roadSystem.Count);
+        }
+
+        [Test]
         public void TestContainsNode()
         {
             RoadSystem anotherSystem = new RoadSystem();
@@ -106,7 +118,6 @@ namespace UnitTest
         [TestCase(0)]
         [TestCase(1)]
         [TestCase(double.MaxValue)]
-        [TestCase(double.PositiveInfinity)]
         public void TestLink(double weight)
         {
             var node1 = _roadSystem.CreateNewNode(1);
@@ -139,8 +150,9 @@ namespace UnitTest
         [TestCase(-1)]
         [TestCase(double.MinValue)]
         [TestCase(double.NegativeInfinity)]
+        [TestCase(double.PositiveInfinity)]
         [ExpectedException(ExpectedException = typeof(ArgumentException),
-            UserMessage = "Weight should be a non-negative number")]
+            UserMessage = "Weight should be a non-negative number and less than PositiveInfinity")]
         public void TestLink_InvalidWeight(double weight)
         {
             var node1 = _roadSystem.CreateNewNode(1);
@@ -150,19 +162,74 @@ namespace UnitTest
         }
 
         [Test]
-        public void TestCreateNewNode_ThreadSafe()
+        public void TestLoad()
         {
+            var reader = File.OpenText(@"Samples\SuccessRoadSystem.xml");
 
+            RoadSystem loadedSystem = RoadSystem.Load(reader.ReadToEnd());
+
+            Assert.AreEqual(12, loadedSystem.Count);
         }
 
         [Test]
-        public void TestLink_ThreadSafe()
+        public void TestLoadFromXml()
         {
+            RoadSystem loadedSystem = RoadSystem.LoadFromXml(@"Samples\SuccessRoadSystem.xml");
 
+            Assert.AreEqual(12, loadedSystem.Count);
+        }
+
+        [Test]
+        [TestCaseSource("LoadFailTestCase")]
+        public void TestLoad_FailCases(string filename, Type exceptionType, string message )
+        {
+            var reader = File.OpenText(Path.Combine("Samples", filename));
+            try
+            {
+                RoadSystem loadedSystem = RoadSystem.Load(reader.ReadToEnd());
+                Assert.Fail("Exepected error did not happened");
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(typeof(LoadRoadSystemException), ex.GetType());
+                Regex regex = new Regex("^" + message);
+                Assert.IsTrue(regex.IsMatch(ex.Message));
+            }
+            finally
+            {
+                reader.Close();
+            }
+        }
+
+        /// <summary>
+        /// Test Fail cases LoadFromXML
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="exceptionType"></param>
+        /// <param name="message"></param>
+        [Test]
+        [TestCaseSource("LoadFailTestCase")]
+        public void TestLoadFromXml_FailCases(string filename, Type exceptionType, string message)
+        {
+            try
+            {
+                RoadSystem loadedSystem = RoadSystem.LoadFromXml(Path.Combine("Samples", filename));
+                Assert.Fail("Exepected error did not happened");
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(typeof(LoadRoadSystemException), ex.GetType());
+                Regex regex = new Regex("^" + message);
+                Assert.IsTrue(regex.IsMatch(ex.Message));
+            }
         }
         #endregion
 
         #region Datasource for Data-Driven Test
+        /// <summary>
+        /// Test cases for Create New Node
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<object[]> CreateNewNodeTestCase()
         {
             return new[] {
@@ -174,14 +241,31 @@ namespace UnitTest
                 new object[] {1, false, NodeRole.Finish },
             };
         }
-        #endregion
 
-        #region Helpers
-        public Thread[] CreateThread(ParameterizedThreadStart execute, int numberOfThread)
+        /// <summary>
+        /// Test cases for fail cases of Load and LoadFromXMl
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<object[]> LoadFailTestCase()
         {
-            Thread[] result = new Thread[numberOfThread];
-            for (var i = 0; i < numberOfThread; result[i++] = new Thread(execute)) ;
-            return result;
+            return new[] {
+                new object[] {"FailXML.xml", typeof(LoadRoadSystemException), @"Error while loading" },
+                new object[] {"MultipleStartNode.xml", typeof(LoadRoadSystemException), @"Error while loading" },
+                new object[] {"MultipleEndNode.xml", typeof(LoadRoadSystemException), @"Error while loading" },
+                new object[] {"NoNode.xml", typeof(LoadRoadSystemException), "No node found" },
+                new object[] {"NoStartNode.xml", typeof(LoadRoadSystemException), "No Start node found" },
+                new object[] {"NoEndNode.xml", typeof(LoadRoadSystemException), "No End node found" },
+                new object[] {"Only1Node.xml", typeof(LoadRoadSystemException), "There only 1 node in the road system" },
+                new object[] {"NodeWithoutID1.xml", typeof(LoadRoadSystemException), "Node without ID" },
+                new object[] {"NodeWithoutID2.xml", typeof(LoadRoadSystemException), "Node without ID" },
+                new object[] {"NodeWithInvalidID.xml", typeof(LoadRoadSystemException), "Node with invalid ID. ID should be a number" },
+                new object[] {"LinkWithoutWeight.xml", typeof(LoadRoadSystemException), "Link does not have weight attribute" },
+                new object[] {"LinkWithoutRef.xml", typeof(LoadRoadSystemException), "Link does not have ref attribute" },
+                new object[] {"LinkWithInvalidWeight.xml", typeof(LoadRoadSystemException), "Link with invalid weight" },
+                new object[] {"LinkWithInvalidRef.xml", typeof(LoadRoadSystemException), "Link with invalid ref ID" },
+                new object[] {"LinkToNonExist.xml", typeof(LoadRoadSystemException), "Link points to non-existing node" },
+                new object[] {"DifferentWeight.xml", typeof(LoadRoadSystemException), "Different weight between 2 nodes is not allowed" },
+            };
         }
         #endregion
     }

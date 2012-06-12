@@ -5,6 +5,9 @@ using System.Text;
 
 namespace RoadSystemLib
 {
+    /// <summary>
+    /// Enumeration of RoadNode roles
+    /// </summary>
     public enum NodeRole
     {
         Normal,

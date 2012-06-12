@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Sample file just specifies 1 way link
+The other way of the link is handled by RoadSystem.Link function
+
+Multiple shortest paths, path with least nodes will be selected
+Expected result : 1,2,5
+-->
+<graph>
+  <node id="1" role="start">
+    <link ref="2" weight="8"/>
+    <link ref="5" weight="20"/>
+    <link ref="3" weight="5"/>
+  </node>
+  <node id="2">
+    <link ref="5" weight="7"/>
+  </node>
+  <node id="3">
+    <link ref="4" weight="5"/>
+  </node>
+  <node id="4">
+    <link ref="5" weight="5"/>
+  </node>
+  <node id="5" role="finish">
+  </node>
+</graph>
