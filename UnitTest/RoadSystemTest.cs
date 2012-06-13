@@ -16,12 +16,18 @@ namespace UnitTest
         private RoadSystem _roadSystem;
 
         #region SetUp and TearDown
+        /// <summary>
+        /// Test SetUp
+        /// </summary>
         [SetUp]
         public void SetUpTest()
         {
             _roadSystem = new RoadSystem();
         }
 
+        /// <summary>
+        /// Test TearDown
+        /// </summary>
         [TearDown]
         public void TearDownTest()
         {
@@ -32,6 +38,12 @@ namespace UnitTest
         #endregion
 
         #region Test Methods
+        /// <summary>
+        /// Test Create New Node
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="crashed"></param>
+        /// <param name="role"></param>
         [Test]
         [TestCaseSource("CreateNewNodeTestCase")]
         public void TestCreateNewNode(int id, bool crashed, NodeRole role)
@@ -44,6 +56,9 @@ namespace UnitTest
             Assert.AreSame(_roadSystem[id], newNode);
         }
 
+        /// <summary>
+        /// Test Create New Node with default value
+        /// </summary>
         [Test]
         public void TestCreateNewNode_DefaultValue()
         {
@@ -76,6 +91,9 @@ namespace UnitTest
             Assert.AreSame(_roadSystem[4], newNode);
         }
 
+        /// <summary>
+        /// Test Create New Node with dupplicated ID
+        /// </summary>
         [Test]
         [ExpectedException(ExpectedException = typeof(ArgumentException),
             UserMessage = "Given id has already been used by another node")]
@@ -85,6 +103,9 @@ namespace UnitTest
             _roadSystem.CreateNewNode(1);
         }
 
+        /// <summary>
+        /// Test Count
+        /// </summary>
         [Test]
         public void TestCount()
         {
@@ -95,6 +116,9 @@ namespace UnitTest
             Assert.AreEqual(2, _roadSystem.Count);
         }
 
+        /// <summary>
+        /// Test ContainsNode
+        /// </summary>
         [Test]
         public void TestContainsNode()
         {
@@ -106,6 +130,9 @@ namespace UnitTest
             Assert.IsTrue(_roadSystem.Contains(newNode));
         }
 
+        /// <summary>
+        /// Test Indexer
+        /// </summary>
         [Test]
         public void TestIndexer()
         {
@@ -115,6 +142,10 @@ namespace UnitTest
             Assert.AreSame(null, _roadSystem[2]);
         }
 
+        /// <summary>
+        /// Test Link
+        /// </summary>
+        /// <param name="weight"></param>
         [TestCase(0)]
         [TestCase(1)]
         [TestCase(double.MaxValue)]
@@ -135,6 +166,9 @@ namespace UnitTest
             Assert.AreEqual(weight, node2.Links[node1]);
         }
 
+        /// <summary>
+        /// Test Link with nodes not in the same system
+        /// </summary>
         [Test]
         [ExpectedException(ExpectedException = typeof(InvalidOperationException),
             UserMessage = "Cannot link nodes from different RoadSystem")]
@@ -147,6 +181,10 @@ namespace UnitTest
             _roadSystem.Link(node, anotherNode, 1);
         }
 
+        /// <summary>
+        /// Test Link with Invalid Weight
+        /// </summary>
+        /// <param name="weight"></param>
         [TestCase(-1)]
         [TestCase(double.MinValue)]
         [TestCase(double.NegativeInfinity)]
@@ -161,6 +199,9 @@ namespace UnitTest
             _roadSystem.Link(node1, node2, weight);
         }
 
+        /// <summary>
+        /// Test Load
+        /// </summary>
         [Test]
         public void TestLoad()
         {
@@ -171,6 +212,9 @@ namespace UnitTest
             Assert.AreEqual(12, loadedSystem.Count);
         }
 
+        /// <summary>
+        /// Test LoadFrom Xml
+        /// </summary>
         [Test]
         public void TestLoadFromXml()
         {
@@ -179,6 +223,12 @@ namespace UnitTest
             Assert.AreEqual(12, loadedSystem.Count);
         }
 
+        /// <summary>
+        /// Test fail cases of Load
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="exceptionType"></param>
+        /// <param name="message"></param>
         [Test]
         [TestCaseSource("LoadFailTestCase")]
         public void TestLoad_FailCases(string filename, Type exceptionType, string message )

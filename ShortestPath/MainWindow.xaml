@@ -1,8 +1,35 @@
 ﻿<Window x:Class="ShortestPath.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:vm="clr-namespace:ShortestPath.ViewModel"
+        Title="Shortest Path" Height="390" Width="503" ResizeMode="NoResize" Loaded="Window_Loaded">    
     <Grid>
-        
+        <Button Content="Browse files..." HorizontalAlignment="Right" Margin="0,0,191,12" Name="_browseFiles" Width="105" Height="23" VerticalAlignment="Bottom" Click="_browseFiles_Click" />
+        <Button Content="Load files from working folder" HorizontalAlignment="Right" Margin="0,0,12,12" Name="_loadFromWorkingDir" Width="168" Height="23" VerticalAlignment="Bottom" Click="_loadFromWorkingDir_Click" />
+        <Grid Margin="12,12,12,40" Name="grid1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="XML Files" Margin="4">
+                <ListBox Name="_resultList" ItemsSource="{Binding ResultItems}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Name="_textBlock" Text="{Binding Filename}"/>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding HasError}" Value="True">
+                                    <Setter Property="Foreground" TargetName="_textBlock" Value="Red"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>                       
+            <GroupBox Grid.Column="1" Header="Shortest Path" Margin="4">
+                <TextBox Background="White" AcceptsReturn="True" IsReadOnly="True" TextWrapping="WrapWithOverflow"
+                         Text="{Binding Path=SelectedValue.Result, ElementName=_resultList, Mode=OneWay}">                    
+                </TextBox>
+            </GroupBox>
+        </Grid>
     </Grid>
 </Window>

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
-  <TopNode>[0-1000]E:\Projects\ShortestPath\ShortestPath.nunit</TopNode>
-  <SelectedNode>[0-1000]E:\Projects\ShortestPath\ShortestPath.nunit</SelectedNode>
+  <TopNode>[0-1000]E:\GIT\ShortestPath\ShortestPath.nunit</TopNode>
+  <SelectedNode>[0-1000]E:\GIT\ShortestPath\ShortestPath.nunit</SelectedNode>
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
-    <Node UniqueName="[0-1000]E:\Projects\ShortestPath\ShortestPath.nunit" Expanded="true" />
-    <Node UniqueName="[0-1027]E:\Projects\ShortestPath\UnitTest\bin\Release\UnitTest.dll" Expanded="true" />
-    <Node UniqueName="[0-1028]UnitTest" Expanded="true" />
-    <Node UniqueName="[0-1003]UnitTest.RoadSystemTest" Expanded="true" />
-    <Node UniqueName="[0-1004]UnitTest.RoadSystemTest.TestCreateNewNode" Expanded="true" />
-    <Node UniqueName="[0-1015]UnitTest.RoadSystemTest.TestLink" Expanded="true" />
-    <Node UniqueName="[0-1021]UnitTest.RoadSystemTest.TestLink_InvalidWeight" Expanded="true" />
+    <Node UniqueName="[0-1000]E:\GIT\ShortestPath\ShortestPath.nunit" Expanded="true" />
+    <Node UniqueName="[0-1075]E:\GIT\ShortestPath\UnitTest\bin\Release\UnitTest.dll" Expanded="true" />
+    <Node UniqueName="[0-1076]UnitTest" Expanded="true" />
+    <Node UniqueName="[0-1001]UnitTest.DijkstraShortestPathFinderTest" Expanded="true" />
+    <Node UniqueName="[0-1002]UnitTest.DijkstraShortestPathFinderTest.TestFinder" Expanded="true" />
+    <Node UniqueName="[0-1070]UnitTest.MainViewModelTest" Expanded="true" />
+    <Node UniqueName="[0-1071]UnitTest.MainViewModelTest.TestLoadFilesAsync" Expanded="true" />
+    <Node UniqueName="[0-1011]UnitTest.RoadSystemTest" Expanded="true" />
   </Nodes>
 </VisualState>
