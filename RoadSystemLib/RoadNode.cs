@@ -56,5 +56,14 @@ namespace RoadSystemLib
             return Links.ContainsLinkTo(node);
         }
 
+        /// <summary>
+        /// Implement GetHashCode for supporting RoadNode to be used as Dictionary key
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            // Return ID hash code
+            return this.ID.GetHashCode();
+        }
     }
 }
