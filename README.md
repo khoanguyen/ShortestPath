@@ -11,6 +11,9 @@ ShortestPath
 
 This is implementation of Finding Shortest Path in Road System using Dikjstra algorithm
 
+
+Download the zip package of the source code from Zip folder
+
 # Running UnitTest
 
 Run [NUnit folder]/bin/nunit-x86.exe
